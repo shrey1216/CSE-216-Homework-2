@@ -47,7 +47,10 @@ export default class OpenAddressHashTable {
     
     // @todo - YOU MUST DEFINE THIS METHOD
     getValue(key) {
-        let index = hashCode(key); // THIS IS THE NATURAL INDEX
+        let table = new OpenAddressHashTable()
+        //let index = hashCode(key);
+        //MAKE SURE THIS WORKS
+        let index = table.hashCode(key); // THIS IS THE NATURAL INDEX
         let count = 0;
         while (count < length) {
             let testKVP = new KeyValuePair;
