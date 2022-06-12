@@ -48,10 +48,11 @@ export default class OpenAddressHashTable {
     // @todo - YOU MUST DEFINE THIS METHOD
     getValue(key) {
 
-        let table = new OpenAddressHashTable()
+        //let table = new OpenAddressHashTable();
         //let index = hashCode(key);
         //MAKE SURE THIS WORKS
-        let index = table.hashCode(key); // THIS IS THE NATURAL INDEX
+        let index = this.hashCode(key); // THIS IS THE NATURAL INDEX
+        
 
         let count = 0;
         while (count < length) {
@@ -84,8 +85,8 @@ export default class OpenAddressHashTable {
     putValue(key, item) {
 
         //FIGURE OUT HOW TO DO THIS CORRECTLY
-        let table = new OpenAddressHashTable()
-        let index = table.hashCode(key); // THIS IS THE NATURAL INDEX
+        //let table = new OpenAddressHashTable()
+        let index = this.hashCode(key); // THIS IS THE NATURAL INDEX
 
         let count = 0;
         while (count < length) {
