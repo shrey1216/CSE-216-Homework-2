@@ -32,31 +32,19 @@ export default class BinarySearchTree {
         return key;
     }
 
-    // @todo - YOU MUST DEFINE THIS METHOD
-    putValue(key, value) {
-        // IF IT'S THE FIRST ONE MAKE IT THE ROOT
-        if (this.root == null) {
-            this.root = new Node(key, value, null, null, null);
-            this.size++;
-            return;
-        }
-        // ADD IT TO THE EXISTING TREE
-        putValueRecursively(key, value, this.root);
-    }
-
     putValueRecursively(key, value, testNode) {
         // DOES IT GO ON THE LEFT?
-        if (key.compare(testNode.key) < 0) {
+        if (key.localeCompare(testNode.key) < 0) {
             if (testNode.left == null) {
                 testNode.left = new Node(key, value, testNode, null, null);
                 this.size++;
                 return;
             }
             else {
-                putValueRecursively(key, value, testNode.left);
+                this.putValueRecursively(key, value, testNode.left);
             }
         }
-        else if (key.compare(testNode.key) == 0) {
+        else if (key.localeCompare(testNode.key) == 0) {
             testNode.data = value;
             return;
         }
@@ -67,15 +55,53 @@ export default class BinarySearchTree {
                 return;
             }
             else {
-                putValueRecursively(key, value, testNode.right);
+                this.putValueRecursively(key, value, testNode.right);
             }
         }
     }
 
+    // @todo - YOU MUST DEFINE THIS METHOD
+    putValue(key, value) {
+        // IF IT'S THE FIRST ONE MAKE IT THE ROOT
+        if (this.root == null) {
+            this.root = new Node(key, value, null, null, null);
+            this.size++;
+            return;
+        }
+        // ADD IT TO THE EXISTING TREE
+        this.putValueRecursively(key, value, this.root);
+    }
 
+    getValueRecursively(key, testNode) {
+        if (key.compare(testNode.key) < 0) {
+            if (testNode.left == null) {
+                return null;
+            }
+            else {
+                return this.getValueRecursively(key, testNode.left);
+            }
+        }
+        else if (key.localeCompare(testNode.key) == 0) {
+            return testNode.data;
+        }
+        else {
+            if (testNode.right == null) {
+                return null;
+            }
+            else {
+                return this.getValueRecursively(key, testNode.right);
+            }
+        }
+    }
+    
     // @todo - YOU MUST DEFINE THIS METHOD
     getValue(key) {
-        return null;
+        if (this.root == null) {
+            return null;
+        }
+        else {
+            return this.getValueRecursively(key, this.root);
+        }
     }
 
     // @todo - YOU MUST DEFINE THIS METHOD
@@ -90,7 +116,7 @@ export default class BinarySearchTree {
             console.log("\nkey: " + key + ", traveller->key:  " + traveller.key + "\n");
 
             //compare method fix
-            if (key.compare(traveller.key) == 0) {
+            if (key.localeCompare(traveller.key) == 0) {
                 // GET THE LARGEST ON THE LEFT, IS THERE IS A LEFT
                 if (traveller.left != null) {
                     // FIND THE LARGEST
@@ -165,7 +191,7 @@ export default class BinarySearchTree {
                 this.size--;
                 found = true;
             }
-            else if (key.compare(traveller.key) < 0) {
+            else if (key.localeCompare(traveller.key) < 0) {
                 if (traveller.left == null) {
                     return;
                 }
