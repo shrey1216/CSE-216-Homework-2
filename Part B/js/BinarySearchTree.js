@@ -73,7 +73,7 @@ export default class BinarySearchTree {
     }
 
     getValueRecursively(key, testNode) {
-        if (key.compare(testNode.key) < 0) {
+        if (key.localeCompare(testNode.key) < 0) {
             if (testNode.left == null) {
                 return null;
             }
