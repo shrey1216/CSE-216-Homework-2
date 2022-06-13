@@ -33,7 +33,7 @@ export default class BinarySearchTree {
     }
 
     putValueRecursively(key, value, testNode) {
-        // DOES IT GO ON THE LEFT?
+        // Check to see if it goes on the left
         if (key.localeCompare(testNode.key) < 0) {
             if (testNode.left == null) {
                 testNode.left = new Node(key, value, testNode, null, null);
@@ -60,15 +60,14 @@ export default class BinarySearchTree {
         }
     }
 
-    // @todo - YOU MUST DEFINE THIS METHOD
     putValue(key, value) {
-        // IF IT'S THE FIRST ONE MAKE IT THE ROOT
+        // make root if first one
         if (this.root == null) {
             this.root = new Node(key, value, null, null, null);
             this.size++;
             return;
         }
-        // ADD IT TO THE EXISTING TREE
+        // add to the existing tree
         this.putValueRecursively(key, value, this.root);
     }
 
@@ -94,7 +93,6 @@ export default class BinarySearchTree {
         }
     }
     
-    // @todo - YOU MUST DEFINE THIS METHOD
     getValue(key) {
         if (this.root == null) {
             return null;
@@ -104,7 +102,6 @@ export default class BinarySearchTree {
         }
     }
 
-    // @todo - YOU MUST DEFINE THIS METHOD
     removeValue(key) {
 
         let traveller = new Node;
@@ -116,28 +113,23 @@ export default class BinarySearchTree {
         while (!found) {
             console.log("\nkey: " + key + ", traveller->key:  " + traveller.key + "\n");
 
-            //compare method fix
+            //changed compare to localeCompare
             if (key.localeCompare(traveller.key) == 0) {
-                // GET THE LARGEST ON THE LEFT, IS THERE IS A LEFT
+                // If there is a left, get the largest on the left
                 if (traveller.left != null) {
-                    // FIND THE LARGEST
+
+                    // find the largest
                     let largest = new Node;
                     largest = traveller.left;
                     while (largest.right != null) {
                         largest = largest.right;
                     }
-                    // AT THIS POINT largest MUST
-                    // BE THE LARGEST ON THE LEFT
-                    // BUT IT MIGHT BE ITS PARENT LEFT
-                    // OR RIGHT NODE
                     
-                    // FIRST MOVE THE key AND THE data
+                    // move the key and the data
                     traveller.key = largest.key;
                     traveller.data = largest.data;
                     
-                    // THEN FIX THE TREE, NOTE largest HAS NO RIGHT
-                    // IF IT'S A LEAF WE DON'T CARE ABOUT ITS CHILDREN
-                    // SO WE CAN JUST KEEP ITS LEFT
+                    // fix tree 
                     if (largest == largest.parent.left) {
                         largest.parent.left = largest.left;
                     }
@@ -146,24 +138,21 @@ export default class BinarySearchTree {
                     }
                     largest = null;
                 }
-                // OR THE SMALLEST ON THE RIGHT
+                // put the smallest on the right 
                 else if (traveller.right != null) {
-                    // FIND THE SMALLEST
+                    // find the smallest first 
                     let smallest = new Node;
                     smallest = traveller.right;
                     while (smallest.left != null) {
                         smallest = smallest.left;
                     }
-                    // AT THIS POINT Smallest MUST
-                    // BE THE SMALLEST ON THE RIGHT
-                    // BUT IT MIGHT BE ITS PARENT RIGHT
-                    // OR LEFT NODE
                     
-                    // FIRST MOVE THE key AND THE data
+                    
+                    // first move key and find data 
                     traveller.key = smallest.key;
                     traveller.data = smallest.data;
                     
-                    // THEN FIX THE TREE
+                    // fix tree
                     if (smallest == smallest.parent.right) {
                         smallest.parent.right = smallest.right;
                     }
@@ -172,18 +161,18 @@ export default class BinarySearchTree {
                     }
                     smallest = null;
                 }
-                // IT'S A LEAF
+                // see if it's a leaf (last in tree)
                 else {
-                    // IT MIGHT BE THE ROOT (i.e. THE ONLY NODE)
+                    // check if root 
                     if (traveller == this.root) {
                         this.root = null;
                     }
-                    // IT MIGHT BE ON ITS PARENT'S LEFT
+                    // check left
                     else if (traveller == traveller.parent.left) {
                         traveller.parent.left = null;
                         traveller = null;
                     }
-                    // OR ITS RIGHT
+                    // check right 
                     else {
                         traveller.parent.right = null;
                         traveller = null;
@@ -211,6 +200,8 @@ export default class BinarySearchTree {
         }
     }
 
+    // toString for printing
+    // Needs to be recursive to iterate through the binary tree
     toStringRecursively(traveller, level) {
         let text = "";
         if (traveller.left != null)
