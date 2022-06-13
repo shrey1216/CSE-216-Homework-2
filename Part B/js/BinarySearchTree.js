@@ -112,6 +112,7 @@ export default class BinarySearchTree {
 
         let found = false;
 
+        console.log("\nIterate through tree to remove value: \n");
         while (!found) {
             console.log("\nkey: " + key + ", traveller->key:  " + traveller.key + "\n");
 
