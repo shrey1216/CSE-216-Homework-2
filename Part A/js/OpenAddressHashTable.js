@@ -7,6 +7,14 @@ class KeyValuePair {
     toString() {
         return "(" + this.key + ", " + this.value.toString() + ")";
     }
+
+    getKey() {
+        return this.key;
+    }
+
+    getValue() {
+        return this.value;
+    }
 }
 
 export default class OpenAddressHashTable {
@@ -45,25 +53,22 @@ export default class OpenAddressHashTable {
         return key;
     }
     
-    // @todo - YOU MUST DEFINE THIS METHOD
     getValue(key) {
 
-        //let table = new OpenAddressHashTable();
-        //let index = hashCode(key);
-        //MAKE SURE THIS WORKS
+
         let index = this.hashCode(key); // THIS IS THE NATURAL INDEX
         
 
         let count = 0;
         while (count < length) {
-            let testKVP = new KeyValuePair;
+            let testKVP = new KeyValuePair();
             testKVP = this.hashTable[index];
             // IF IT'S null, IT CAN'T BE IN THE HASH TABLE
             if (testKVP == null) {
                 return null;
              }
             // IF A KVP USES THIS KEY, RETURN ITS VALUE
-             else if (testKVP.key.compare(key) == 0) {
+             else if (testKVP.key.localeCompare(key) == 0) {
                  return testKVP.value;
             }
             index++;
@@ -77,13 +82,12 @@ export default class OpenAddressHashTable {
     }
  
     
-    // @todo - YOU MUST DEFINE THIS METHOD
     removeValue(key) {
         let index = this.hashCode(key); // THIS IS THE NATURAL INDEX
         let count = 0;
 
         while (count < length) {
-            let testKVP = new KeyValuePair;
+            let testKVP = new KeyValuePair();
             testKVP = this.hashTable[index];
             // IF IT'S null, IT CAN'T BE IN THE HASH TABLE
             if (testKVP == null) {
@@ -91,8 +95,7 @@ export default class OpenAddressHashTable {
             }
             // IF A KVP USES THIS KEY, REMOVE IT
 
-            //Find a better way to compare two strings (locale comare inconsistent)
-            else if (testKVP.key.localeCompare(key) == 0) {
+            else if (testKVP.getKey().localeCompare(key) == 0) {
                 // DELETE THE KVP (but not the value)
                 testKVP = null;
                 
@@ -103,7 +106,6 @@ export default class OpenAddressHashTable {
                 this.size--;
                 
                 // AND REHASH THE TABLE
-                //KeyValuePair* *temp = new KeyValuePair*[length];
                 let temp = new KeyValuePair[length];
                 temp = new KeyValuePair[this.length]
 
@@ -112,7 +114,7 @@ export default class OpenAddressHashTable {
                 // WHERE WE CAN GET THEM WHILE EMPTYING THE HASH TABLE
                 for (let i = 0; i < length; i++) {
                     
-                    let item = new KeyValuePair;
+                    let item = new KeyValuePair();
                     item = this.hashTable[i];
 
                     if (item != null) {
@@ -126,8 +128,7 @@ export default class OpenAddressHashTable {
                 // AND NOW RE-PUT ALL THE VALUES
                 for (let i = 0; i < counter; i++) {
 
-                    //KeyValuePair *item = temp[i];
-                    let item = new KeyValuePair;
+                    let item = new KeyValuePair();
                     item = temp[i];
 
                     let keyToRehash = item.key;
@@ -150,17 +151,15 @@ export default class OpenAddressHashTable {
         }            
     }
 
-    // @todo - YOU MUST DEFINE THIS METHOD
     putValue(key, item) {
+        try {
 
         //FIGURE OUT HOW TO DO THIS CORRECTLY
-        //let table = new OpenAddressHashTable()
         let index = this.hashCode(key); // THIS IS THE NATURAL INDEX
 
         let count = 0;
-        while (count < length) {
-            let testKVP = new KeyValuePair;
-            testKVP = this.hashTable[index];
+        let testKVP = this.hashTable[index];
+        while (count < this.length) {
             // IF IT'S AVAILABLE, PUT IT HERE
             if (testKVP == null) {
                 this.hashTable[index] = new KeyValuePair(key, item);
@@ -168,10 +167,8 @@ export default class OpenAddressHashTable {
                 return;
             }
             // IF ANOTHER KVP ALREADY USES THIS KEY, REPLACE IT
-            // FIX COMPARE METHOD
-            else if (testKVP.key.compare(key) == 0) {
+            else if (testKVP.getKey().localeCompare(key) == 0) {
                 this.hashTable[index].value = item;
-                this.size++;
                 return;
             }
             index++;
@@ -183,12 +180,13 @@ export default class OpenAddressHashTable {
         // WE DIDN'T FIND AN EMPTY SPOT OR AN ITEM WITH THE SAME
         // KEY SO WE NEED A BIGGER HASH TABLE. SO MAKE A BIGGER
         // ONE AND PUT ALL THE OLD VALUES IN THE NEW ONE
-        let temp = new KeyValuePair;
-        temp = this.hashTable;
+        let temp = [this.hashTable.length];
+        for (let i = 0; i < temp.length; i++) {
+            temp[i] = new KeyValuePair(this.hashTable[i].getKey(), this.hashTable[i].getValue());
+        }
         length = length * 2;
 
-        //this.hashTable = new KeyValuePair[length];
-        this.hashTable[length] = new KeyValuePair;
+        this.hashTable = [length];
 
         // FIRST CLEAR IT OUT
         for (let i = 0; i < length; i++) {
@@ -197,25 +195,23 @@ export default class OpenAddressHashTable {
         // THEN MOVE ALL THE OLD VALUES OVER
         let numToCopy = this.size;
         this.size = 0;
+        let kvp = new KeyValuePair();
         for (let i = 0; i < numToCopy; i++) {
-            let kvp = new KeyValuePair;
             kvp = temp[i];
-            let keyToMove = kvp.key;
+            let keyToMove = kvp.getKey();
   
-            //REMOVING S* from the beginning
             let valueToMove = kvp.value;
-            putValue(keyToMove, valueToMove);
+            this.putValue(keyToMove, valueToMove);
             //FIGURE OUT HOW TO DELETE!
-            //delete kvp;
-            kvp = null;
         }
-        //delete temp;
         //to free the contents of a variable, you can set it to null. 
-        //
-        temp = null;
        
         // AND REMEMBER TO ADD THE NEW ONE
         this.putValue(key, item);
+    }
+    catch(e) {
+
+    }
     }
 
     

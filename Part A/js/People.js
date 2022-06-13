@@ -28,7 +28,10 @@ class Student extends Person {
     }
 
     toString() {
+        try {
         return super.toString() + " (" + this.gpa.toFixed(1) + " GPA)";
+        }
+        catch (e) {}
     }
 }
 

@@ -18,7 +18,7 @@ function addPersonToHashTable(person, hashTable) {
     hashTable.putValue(person.key, person);
     printHashTable("Current Hash Table:", hashTable);
 }
-
+try {
 let hashTable = new OpenAddressHashTable(NUM_BINS, KEY_LENGTH);
 
 // DEMONSTRATE ADDING VALUES TO THE HASH TABLE, WHICH INCLUDES THE NEED TO MAKE THE HASH TABLE BIGGER
@@ -80,3 +80,5 @@ printHashTable("\nAfter Removing Bill Withers", hashTable);
 
 hashTable.removeValue(bgKey);
 printHashTable("\nAfter Removing Shreyan Wankavala", hashTable);
+}
+catch (e) {}
