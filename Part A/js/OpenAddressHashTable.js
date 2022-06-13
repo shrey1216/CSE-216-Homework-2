@@ -57,7 +57,7 @@ export default class OpenAddressHashTable {
         let count = 0;
         while (count < length) {
             let testKVP = new KeyValuePair;
-            testKVP = hashTable[index];
+            testKVP = this.hashTable[index];
             // IF IT'S null, IT CAN'T BE IN THE HASH TABLE
             if (testKVP == null) {
                 return null;
@@ -84,7 +84,7 @@ export default class OpenAddressHashTable {
 
         while (count < length) {
             let testKVP = new KeyValuePair;
-            testKVP = hashTable[index];
+            testKVP = this.hashTable[index];
             // IF IT'S null, IT CAN'T BE IN THE HASH TABLE
             if (testKVP == null) {
                 return;
@@ -97,10 +97,10 @@ export default class OpenAddressHashTable {
                 testKVP = null;
                 
                 // EMPTY THAT LOCATION
-                hashTable[index] = null;
+                this.hashTable[index] = null;
                 
                 // DECREMENT THE SIZE
-                size--;
+                this.size--;
                 
                 // AND REHASH THE TABLE
                 //KeyValuePair* *temp = new KeyValuePair*[length];
@@ -113,16 +113,16 @@ export default class OpenAddressHashTable {
                 for (let i = 0; i < length; i++) {
                     
                     let item = new KeyValuePair;
-                    item = hashTable[i];
+                    item = this.hashTable[i];
 
                     if (item != null) {
                         temp[counter] = item;
                         counter++;
                     }
-                    hashTable[i] = null;
+                    this.hashTable[i] = null;
                 }
                 // RESET THE size
-                size = 0;
+                this.size = 0;
                 // AND NOW RE-PUT ALL THE VALUES
                 for (let i = 0; i < counter; i++) {
 
@@ -160,17 +160,18 @@ export default class OpenAddressHashTable {
         let count = 0;
         while (count < length) {
             let testKVP = new KeyValuePair;
-            testKVP = hashTable[index];
+            testKVP = this.hashTable[index];
             // IF IT'S AVAILABLE, PUT IT HERE
             if (testKVP == null) {
-                hashTable[index] = new KeyValuePair(key, item);
-                size++;
+                this.hashTable[index] = new KeyValuePair(key, item);
+                this.size++;
                 return;
             }
             // IF ANOTHER KVP ALREADY USES THIS KEY, REPLACE IT
+            // FIX COMPARE METHOD
             else if (testKVP.key.compare(key) == 0) {
-                hashTable[index].value = item;
-                size++;
+                this.hashTable[index].value = item;
+                this.size++;
                 return;
             }
             index++;
@@ -185,14 +186,17 @@ export default class OpenAddressHashTable {
         let temp = new KeyValuePair;
         temp = this.hashTable;
         length = length * 2;
-        this.hashTable = new KeyValuePair * [length];
+
+        //this.hashTable = new KeyValuePair[length];
+        this.hashTable[length] = new KeyValuePair;
+
         // FIRST CLEAR IT OUT
         for (let i = 0; i < length; i++) {
             this.hashTable[i] = null;
         }
         // THEN MOVE ALL THE OLD VALUES OVER
-        let numToCopy = size;
-        size = 0;
+        let numToCopy = this.size;
+        this.size = 0;
         for (let i = 0; i < numToCopy; i++) {
             let kvp = new KeyValuePair;
             kvp = temp[i];
