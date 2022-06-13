@@ -38,6 +38,7 @@ class Undergraduates extends Student {
        this.standing = initStanding;
    }
  
+   //returns the super toString method and adds the standing to the output
    toString() {
        return super.toString() + " (" + this.standing.toLocaleString() + ")";
    }
