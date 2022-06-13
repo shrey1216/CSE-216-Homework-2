@@ -104,7 +104,7 @@ export default class BinarySearchTree {
 
     removeValue(key) {
 
-        let traveller = new Node;
+        let traveller = new Node();
         traveller = this.root;
 
         let found = false;
@@ -119,7 +119,7 @@ export default class BinarySearchTree {
                 if (traveller.left != null) {
 
                     // find the largest
-                    let largest = new Node;
+                    let largest = new Node();
                     largest = traveller.left;
                     while (largest.right != null) {
                         largest = largest.right;
@@ -141,7 +141,7 @@ export default class BinarySearchTree {
                 // put the smallest on the right 
                 else if (traveller.right != null) {
                     // find the smallest first 
-                    let smallest = new Node;
+                    let smallest = new Node();
                     smallest = traveller.right;
                     while (smallest.left != null) {
                         smallest = smallest.left;

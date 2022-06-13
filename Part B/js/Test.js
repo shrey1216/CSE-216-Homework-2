@@ -30,7 +30,7 @@ addPersonToBST(new Student(tree.generateKey(), "Aubrey", "Graham", 3.5), tree);
 addPersonToBST(new Student(tree.generateKey(), "Travis", "Scott", 3.6), tree);
 addPersonToBST(new Person(tree.generateKey(), "Olivia", "Rodrigo"), tree);
 addPersonToBST(new Employee(tree.generateKey(), "Frank", "Ocean", 750000), tree);
-addPersonToBST(new Student(tree.generateKey(), "NAV", "NAV", 0.0), tree);
+addPersonToBST(new Student(tree.generateKey(), "Nav", "Nav", 0.0), tree);
 
 // DEMONSTRATE MAKING KEYS AND ADDING VALUES TO THE BST    
 // generate random keys and add them to the BST
