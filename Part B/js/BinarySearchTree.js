@@ -15,20 +15,18 @@ export default class BinarySearchTree {
         this.keyLength = initKeyLength;
     }
 
-    // @todo - YOU MUST UPDATE THIS METHOD SO A KEY ONLY HAS LOWERCASE LETTERS, NO NUMBERS
+    // Updated Method for lowercase letters
     generateKey() {
         let key = "";
         for (let i = 0; i < this.keyLength; i++) {
-            let randomNum = Math.floor(Math.random() * 36);
+            let randomNum = Math.floor(Math.random() * 26);
             let randomChar;
-            if (randomNum < 10) {
-                randomNum += 48;
-                randomChar = String.fromCharCode(randomNum);
-            }
-            else {
-                randomNum += 55;
-                randomChar = String.fromCharCode(randomNum);
-            }
+
+            //the lowercase alphabet starts at ascii code 97
+            //extends to 26 because 26 letters in the alphabet
+            randomNum += 97;
+            randomChar = String.fromCharCode(randomNum);
+            
             key += randomChar;
         }
         return key;
